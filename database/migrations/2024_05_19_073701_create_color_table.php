@@ -11,16 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('brand', function (Blueprint $table) {
+        Schema::create('color', function (Blueprint $table) {
             $table->id();
-            $table->string('meta_title')->nullable();
-            $table->mediumText('meta_keyword')->nullable();
-            $table->mediumText('meta_description')->nullable();
+            $table->string('name')->nullable();
+            $table->string('code')->unique();
+            $table->string('color')->nullable();
+            $table->string('hex_code')->nullable();
             $table->string('image')->nullable();
-            $table->string('slug');
-            $table->string('name');
-            $table->longText('description')->nullable();
-            $table->tinyInteger('status')->default('0');
+            $table->tinyInteger('status')->default(0);
             $table->timestamps();
         });
     }
@@ -30,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('brand');
+        Schema::dropIfExists('color');
     }
 };

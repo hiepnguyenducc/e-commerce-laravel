@@ -96,10 +96,18 @@ class CategoryController extends Controller
         $validator = Validator::make($request->all(),[
             'meta_title'=>'required|max:191',
             'slug'=>'required|max:191',
-            'name'=>'required|max:191',
+            'name'=>['required', 'max:191', 'regex:/^[a-zA-Z0-9\s]+$/'],
             'meta_keyword'=>'required',
             'meta_description'=>'required',
             'description'=>'required',
+        ],[
+            'meta_title.required'=>'Meta Title Required',
+            'slug.required'=>'Slug Required',
+            'name.required'=>'Name Required',
+            'name.regex'=>'Name Must Be At Least 2 Character',
+            'meta_keyword.required'=>'Meta Keyword Required',
+            'meta_description.required'=>'Meta Description Required',
+            'description.required'=>'Description Required',
 
         ]);
         if($validator->fails()){

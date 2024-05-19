@@ -55,26 +55,27 @@ class ProductController extends Controller
             $product->original_price = $request->input('original_price');
             $product->quantity = $request->input('quantity');
 
-//            if ($request->hasFile('image')) {
-//                $file = $request->file('image');
-//                $extension = $file->getClientOriginalExtension();
-//                $filename = time() . '.' . $extension;
-//                $file->move('upload/product/', $filename);
-//                $product->image = 'upload/product/' . $filename;
-//            }
-            if($request->hasFile('image')){
-                $uploadPath = 'upload/product/';
-                foreach ($request->file('image') as $imageFile){
-                    $extention = $imageFile->getClientOriginalExtension();
-                    $fileName = time().'.'.$extention;
-                    $imageFile->move($uploadPath,$fileName);
-                    $finalImagePathName = $uploadPath.$fileName;
-                    $product->productImage()->create([
-                        'product_id'=>$product->id,
-                        'image'=>$finalImagePathName,
-                    ]);
-                }
+            if ($request->hasFile('image')) {
+                $file = $request->file('image');
+                $extension = $file->getClientOriginalExtension();
+                $filename = time() . '.' . $extension;
+                $file->move('upload/product/', $filename);
+                $product->image = 'upload/product/' . $filename;
             }
+
+//            if($request->hasFile('image')){
+//                $uploadPath = 'upload/product/';
+//                foreach ($request->file('image') as $imageFile){
+//                    $extention = $imageFile->getClientOriginalExtension();
+//                    $fileName = time().'.'.$extention;
+//                    $imageFile->move($uploadPath,$fileName);
+//                    $finalImagePathName = $uploadPath.$fileName;
+//                    $product->productImage()->create([
+//                        'product_id'=>$product->id,
+//                        'image'=>$finalImagePathName,
+//                    ]);
+//                }
+//            }
 
             $product->featured = $request->input('featured') == true ? '1' : '0';
             $product->popular = $request->input('popular') == true ? '1' : '0';

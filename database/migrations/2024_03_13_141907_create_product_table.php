@@ -21,6 +21,8 @@ return new class extends Migration
             $table->string('meta_keyword')->nullable();
             $table->longText('meta_description')->nullable();
             $table->integer('brand_id')->nullable();
+            $table->integer('size_id')->nullable();
+            $table->integer('color_id')->nullable();
             $table->string('selling_price');
             $table->string('original_price');
             $table->string('quantity');
@@ -28,6 +30,8 @@ return new class extends Migration
             $table->tinyInteger('featured')->default('0')->nullable();
             $table->tinyInteger('popular')->default('0')->nullable();
             $table->tinyInteger('sale')->default('0')->nullable();TODO:
+            $table->dateTime('sale_start_date')->nullable();
+            $table->dateTime('sale_end_date')->nullable();
             $table->tinyInteger('status')->default('0');
 
             $table->timestamps();

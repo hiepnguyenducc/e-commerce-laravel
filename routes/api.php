@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\Api\AuthController;
+use App\Http\Controllers\Api\BrandController;
 use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\ColorController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -40,6 +42,19 @@ Route::middleware(['auth:sanctum','isAPIAdmin'])->group(function(){
     Route::get('delete-product/{id}',[ProductController::class,'destroy']);
     Route::get('edit-product/{id}',[ProductController::class,'edit']);
     Route::post('update-product/{id}',[ProductController::class,'update']);
+    //brand
+    Route::post('store-brand',[BrandController::class,'store']);
+    Route::get('view-brand',[BrandController::class,'index']);
+    Route::get('edit-brand/{id}',[BrandController::class,'edit']);
+    Route::post('update-brand/{id}',[BrandController::class,'update']);
+    Route::get('delete-brand/{id}',[BrandController::class,'destroy']);
+    //Color
+    Route::get('view-color',[ColorController::class,'index']);
+    Route::post('store-color',[ColorController::class,'store']);
+    Route::get('edit-color/{id}',[ColorController::class,'edit']);
+    Route::post('update-color/{id}',[ColorController::class,'update']);
+    Route::get('delete-color/{id}',[ColorController::class,'destroy']);
+
 
 });
 Route::get('view-product',[ProductController::class,'index']);
