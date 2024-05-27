@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Models\ProductColor;
 use Illuminate\Support\Facades\File;
 
 use http\Env\Response;
@@ -20,20 +21,23 @@ class ProductController extends Controller
             'product'=>$product,
         ]);
     }
+    public function all_product_new(Request $request){
+        $product = Product::orderBy('created_at', 'desc')->get();
+        return response()->json([
+            'status'=>200,
+            'product'=>$product,
+        ]);
+    }
     public function store(Request $request){
         $validator = Validator::make($request->all(),[
             'category_id'=>'required|max:191',
             'slug'=>'required|max:191',
             'name'=>'required|max:191',
-
             'meta_title'=>'required|max:20',
-
             'brand_id'=>'required|max:20',
-            'selling_price'=>'required|max:20',
             'original_price'=>'required|max:20',
             'quantity'=>'required|max:4',
             'image'=>'required|image|mimes:jpeg,png,jpg,mp4|max:2048',
-
         ]);
         if($validator->fails()){
             return response()->json([
@@ -51,6 +55,8 @@ class ProductController extends Controller
             $product->meta_keyword = $request->input('meta_keyword');
             $product->meta_description = $request->input('meta_description');
             $product->brand_id = $request->input('brand_id');
+            $product->size_id = $request->input('size_id');
+            $product->color_id = $request->input('color_id');
             $product->selling_price = $request->input('selling_price');
             $product->original_price = $request->input('original_price');
             $product->quantity = $request->input('quantity');
@@ -76,10 +82,24 @@ class ProductController extends Controller
 //                    ]);
 //                }
 //            }
+//
+
+//            if($request->color_id){
+//                foreach ($request->color_id as $key=> $color){
+//                    $product->productColor()->create([
+//                        'product_id'=>$product->id,
+//                        'color_id'=>$color,
+//                        'quantity'=>$request->color_quantity[$key] ?? 0
+//                    ]);
+//                }
+//            }
 
             $product->featured = $request->input('featured') == true ? '1' : '0';
             $product->popular = $request->input('popular') == true ? '1' : '0';
             $product->sale = $request->input('sale') == true ? '1' : '0';
+            $product->sale_start_date = $request->input('sale_start_date');
+            $product->sale_end_date = $request->input('sale_end_date');
+            $product->collection_id = $request->input('collection_id');
             $product->status = $request->input('status') == true ? '1' : '0';
             $product->save();
 
@@ -126,13 +146,10 @@ class ProductController extends Controller
             'category_id'=>'required|max:191',
             'slug'=>'required|max:191',
             'name'=>'required|max:191',
-
             'meta_title'=>'required|max:20',
 
-            'brand'=>'required|max:20',
-            'selling_price'=>'required|max:20',
             'original_price'=>'required|max:20',
-            'quantity'=>'required|max:4',
+            'quantity'=>'required|max:20',
         ]);
         if($validator->fails()){
             return response()->json([
@@ -154,6 +171,8 @@ class ProductController extends Controller
                 $product->selling_price = $request->input('selling_price');
                 $product->original_price = $request->input('original_price');
                 $product->quantity = $request->input('quantity');
+                $product->size_id = $request->input('size_id');
+                $product->color_id = $request->input('color_id');
 
                 if ($request->hasFile('image')) {
                     $path = $product->image;
@@ -170,7 +189,11 @@ class ProductController extends Controller
                 $product->featured = $request->input('featured') == true ? '1' : '0';
                 $product->popular = $request->input('popular') == true ? '1' : '0';
                 $product->sale = $request->input('sale') == true ? '1' : '0';
+                $product->sale_start_date = $request->input('sale_start_date');
+                $product->sale_end_date = $request->input('sale_end_date');
+                $product->collection_id = $request->input('collection_id');
                 $product->status = $request->input('status') == true ? '1' : '0';
+
                 $product->update();
 
                 $product->save();

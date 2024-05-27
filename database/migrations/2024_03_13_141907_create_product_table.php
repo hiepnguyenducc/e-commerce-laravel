@@ -23,13 +23,14 @@ return new class extends Migration
             $table->integer('brand_id')->nullable();
             $table->integer('size_id')->nullable();
             $table->integer('color_id')->nullable();
-            $table->string('selling_price');
+            $table->string('selling_price')->nullable();
             $table->string('original_price');
             $table->string('quantity');
             $table->string('image')->nullable();
             $table->tinyInteger('featured')->default('0')->nullable();
             $table->tinyInteger('popular')->default('0')->nullable();
             $table->tinyInteger('sale')->default('0')->nullable();TODO:
+            $table->integer('collection_id');
             $table->dateTime('sale_start_date')->nullable();
             $table->dateTime('sale_end_date')->nullable();
             $table->tinyInteger('status')->default('0');

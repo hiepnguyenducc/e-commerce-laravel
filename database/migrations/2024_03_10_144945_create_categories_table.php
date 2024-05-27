@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('slug');
             $table->string('name');
             $table->longText('description')->nullable();
+            $table->bigInteger('collection_id')->nullable();
             $table->tinyInteger('status')->default('0');
             $table->timestamps();
         });

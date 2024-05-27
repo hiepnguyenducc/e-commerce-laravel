@@ -16,13 +16,21 @@ class ColorController extends Controller
             'color'=>$color
         ]);
     }
+    public function all_color()
+    {
+        $color = Color::where('status','0')->get();
+        return response()->json([
+            'status'=>200,
+            'color'=>$color
+        ]);
+    }
     public function store(Request $request){
         $validator = Validator::make($request->all(),[
            'name'=>'required|string',
            'code'=>'required|string',
-           'color'=>'required|string',
+
             'hex_code'=>'required|string',
-            'image'=>'required'
+
         ]);
         if($validator->fails()){
             return response()->json([
@@ -33,9 +41,9 @@ class ColorController extends Controller
             $color = new Color();
             $color->name = $request->input('name');
             $color->code= $request->input('code');
-            $color->color = $request->input('color');
+
             $color->hex_code = $request->input('hex_code');
-            $color->image = $request->input('image');
+
             $color->status = $request->input('status')==true ? '1' : '0';
             $color->save();
             return response()->json([
@@ -62,9 +70,7 @@ class ColorController extends Controller
         $validator = Validator::make($request->all(),[
             'name'=>'required|string',
             'code'=>'required|string',
-            'color'=>'required|string',
             'hex_code'=>'required|string',
-            'image'=>'required'
         ]);
         if($validator->fails()){
             return response()->json([
@@ -76,21 +82,37 @@ class ColorController extends Controller
             if($color){
                 $color->name = $request->input('name');
                 $color->code= $request->input('code');
-                $color->color = $request->input('color');
+
                 $color->hex_code = $request->input('hex_code');
-                $color->image = $request->input('image');
                 $color->status = $request->input('status')==true ? '1' : '0';
                 $color->save();
                 return response()->json([
                     'status'=>200,
                     'message'=>'Color Updated successfully',
                 ]);
-            }else{
+            }
+            else{
                 return response()->json([
                     'status'=>404,
                     'message'=>'No Color Id Found'
                 ]);
             }
+        }
+
+    }
+    public function destroy($id){
+        $color = Color::find($id);
+        if($color){
+            $color->delete();
+            return response()->json([
+                'status'=>200,
+                'message'=>'Color Deleted successfully'
+            ]);
+        }else{
+            return response()->json([
+                'status'=>404,
+                'message'=>'No Color Id Found'
+            ]);
         }
     }
 }

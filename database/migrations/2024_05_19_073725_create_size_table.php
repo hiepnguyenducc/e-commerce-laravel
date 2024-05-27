@@ -21,6 +21,7 @@ return new class extends Migration
             $table->decimal('width', 5, 2);
             $table->decimal('height', 5, 2);
             $table->decimal('weight', 5, 2);
+            $table->tinyInteger('status')->default(0);
             $table->timestamps();
         });
     }

@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('name')->nullable();
             $table->string('code')->unique();
-            $table->string('color')->nullable();
+
             $table->string('hex_code')->nullable();
-            $table->string('image')->nullable();
+
             $table->tinyInteger('status')->default(0);
             $table->timestamps();
         });

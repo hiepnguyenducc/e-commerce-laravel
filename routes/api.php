@@ -4,6 +4,8 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\BrandController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\ColorController;
+use App\Http\Controllers\Api\SizeController;
+use App\Http\Controllers\Api\FrontendController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -48,16 +50,35 @@ Route::middleware(['auth:sanctum','isAPIAdmin'])->group(function(){
     Route::get('edit-brand/{id}',[BrandController::class,'edit']);
     Route::post('update-brand/{id}',[BrandController::class,'update']);
     Route::get('delete-brand/{id}',[BrandController::class,'destroy']);
+    Route::get('all-brand',[BrandController::class,'all_brand']);
     //Color
     Route::get('view-color',[ColorController::class,'index']);
     Route::post('store-color',[ColorController::class,'store']);
     Route::get('edit-color/{id}',[ColorController::class,'edit']);
     Route::post('update-color/{id}',[ColorController::class,'update']);
     Route::get('delete-color/{id}',[ColorController::class,'destroy']);
-
+    Route::get('all-color',[ColorController::class,'all_color']);
+    //Size
+    Route::get('view-size',[SizeController::class,'index']);
+    Route::post('store-size',[SizeController::class,'store']);
+    Route::get('edit-size/{id}',[SizeController::class,'edit']);
+    Route::post('update-size/{id}',[SizeController::class,'update']);
+    Route::get('delete-size/{id}',[SizeController::class,'destroy']);
+    Route::get('all-size',[SizeController::class,'all_size']);
 
 });
-Route::get('view-product',[ProductController::class,'index']);
+Route::get('view-product',[ProductController::class,'all_product_new']);
+Route::get('getCategory',[FrontendController::class,'category']);
+Route::get('getBrand',[FrontendController::class,'brand']);
+Route::get('getColor',[FrontendController::class,'color']);
+Route::get('getPriceProduct',[FrontendController::class,'price_product']);
+Route::get('getProduct',[FrontendController::class,'product']);
+Route::get('getProductByCategory/{id}',[FrontendController::class,'product_category']);
+Route::get('getProductBySlug/{slug}',[FrontendController::class,'product_detail']);
+Route::get('getAllColor',[FrontendController::class,'all_color']);
+Route::get('getCollection',[FrontendController::class,'collection']);
+Route::get('getCategoryByCollection/{id}',[FrontendController::class,'category_collection']);
+Route::get('getProductByCollection/{id}',[FrontendController::class,'product_by_collection']);
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });

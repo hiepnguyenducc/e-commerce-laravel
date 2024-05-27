@@ -16,6 +16,15 @@ class Category extends Model
         'slug',
         'name',
         'description',
+        'collection_id',
         'status',
     ];
+    public function product()
+    {
+        return $this->hasMany(Product::class);
+    }
+    public function collections()
+    {
+        return $this->hasMany(Collection::class, 'id', 'collection_id');
+    }
 }

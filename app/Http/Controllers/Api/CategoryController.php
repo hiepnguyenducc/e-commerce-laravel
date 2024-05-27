@@ -59,6 +59,7 @@ class CategoryController extends Controller
                 $category->slug = $request->input('slug');
                 $category->name = $request->input('name');
                 $category->description = $request->input('description');
+                $category->collection_id = request('collection_id');
                 $category->status = $request->input('status')== true ? '1':'0';
                 $category->save();
                 return response()->json([
@@ -122,6 +123,7 @@ class CategoryController extends Controller
             $category->meta_description = $request->input('meta_description');
             $category->slug = $request->input('slug');
             $category->name = $request->input('name');
+            $category->collection_id = $request->input('collection_id');
             $category->description = $request->input('description');
             $category->status = $request->input('status') ? '1':'0';
             $category->save();

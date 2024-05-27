@@ -15,7 +15,11 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('product_id')->unsigned();
             $table->bigInteger('color_id')->unsigned();
+            $table->bigInteger('quantity')->unsigned();
             $table->timestamps();
+
+            $table->foreign('product_id')->references('id')->on('product')->onDelete('cascade');
+            $table->foreign('color_id')->references('id')->on('color')->onDelete('cascade');
         });
     }
 
