@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\BrandController;
 use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\CollectionController;
 use App\Http\Controllers\Api\ColorController;
 use App\Http\Controllers\Api\SizeController;
 use App\Http\Controllers\Api\FrontendController;
@@ -65,6 +66,13 @@ Route::middleware(['auth:sanctum','isAPIAdmin'])->group(function(){
     Route::post('update-size/{id}',[SizeController::class,'update']);
     Route::get('delete-size/{id}',[SizeController::class,'destroy']);
     Route::get('all-size',[SizeController::class,'all_size']);
+    //Collection
+    Route::get('view-collection',[CollectionController::class,'index']);
+    Route::post('store-collection',[CollectionController::class,'store']);
+    Route::get('edit-collection/{id}',[CollectionController::class,'edit']);
+    Route::post('update-collection/{id}',[CollectionController::class,'update']);
+    Route::get('delete-collection/{id}',[CollectionController::class,'destroy']);
+
 
 });
 Route::get('view-product',[ProductController::class,'all_product_new']);
