@@ -131,6 +131,44 @@ class FrontendController extends Controller
             ]);
         }
     }
+    public function category_by_slug($slug)
+    {
+        $category = Category::where('slug', $slug)->get();
+        if($category){
+            return response()->json([
+                'status' => 200,
+                'category' => $category
+            ]);
+        }else{
+            return response()->json([
+                'status' => 404,
+                'message' => 'Category not found'
+            ]);
+    }
+
+    }
+
+    public function product_by_category($slug)
+    {
+        $category = Category::where('slug', $slug)->first();
+        if ($category) {
+            $product = Product::where('category_id', $category->id)->get();
+
+            return response()->json([
+                'status' => 200,
+                'product' => $product
+            ]);
+        } else {
+
+            return response()->json([
+                'status' => 404,
+                'message' => 'Category not found'
+            ], 404);
+        }
+
+    }
+
+
 
 
 

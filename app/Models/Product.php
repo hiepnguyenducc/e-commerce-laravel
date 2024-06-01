@@ -11,7 +11,7 @@ class Product extends Model
     use HasFactory;
 
 
-    public mixed $id;
+
     protected $table = 'product';
     protected $fillable = [
         'id',

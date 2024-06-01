@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use http\Env\Response;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 
@@ -58,6 +59,17 @@ class CategoryController extends Controller
                 $category->meta_description = $request->input('meta_description');
                 $category->slug = $request->input('slug');
                 $category->name = $request->input('name');
+                if ($request->hasFile('image')) {
+                    $path = $category->image;
+                    if(File::exists($path)){
+                        File::delete($path);
+                    }
+                    $file = $request->file('image');
+                    $extension = $file->getClientOriginalExtension();
+                    $filename = time() . '.' . $extension;
+                    $file->move('upload/category/', $filename);
+                    $category->image = 'upload/category/' . $filename;
+                }
                 $category->description = $request->input('description');
                 $category->collection_id = request('collection_id');
                 $category->status = $request->input('status')== true ? '1':'0';
@@ -113,7 +125,7 @@ class CategoryController extends Controller
         ]);
         if($validator->fails()){
             return response()->json([
-                'status'=>400,
+                'status'=>422,
                 'errors'=>$validator->messages(),
             ]);
         }else{
@@ -123,6 +135,15 @@ class CategoryController extends Controller
             $category->meta_description = $request->input('meta_description');
             $category->slug = $request->input('slug');
             $category->name = $request->input('name');
+
+            if ($request->hasFile('image')) {
+                $file = $request->file('image');
+                $extension = $file->getClientOriginalExtension();
+                $filename = time() . '.' . $extension;
+                $file->move('upload/category/', $filename);
+                $category->image = 'upload/category/' . $filename;
+            }
+
             $category->collection_id = $request->input('collection_id');
             $category->description = $request->input('description');
             $category->status = $request->input('status') ? '1':'0';

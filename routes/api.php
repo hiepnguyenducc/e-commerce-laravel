@@ -7,9 +7,11 @@ use App\Http\Controllers\Api\CollectionController;
 use App\Http\Controllers\Api\ColorController;
 use App\Http\Controllers\Api\SizeController;
 use App\Http\Controllers\Api\FrontendController;
+use App\Http\Controllers\Api\CartController;
+use App\Http\Controllers\Api\CommentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\Api\FavoritesController;
 use \App\Http\Controllers\Api\ProductController;
 /*
 |--------------------------------------------------------------------------
@@ -87,6 +89,17 @@ Route::get('getAllColor',[FrontendController::class,'all_color']);
 Route::get('getCollection',[FrontendController::class,'collection']);
 Route::get('getCategoryByCollection/{id}',[FrontendController::class,'category_collection']);
 Route::get('getProductByCollection/{id}',[FrontendController::class,'product_by_collection']);
+Route::get('getProductByCategorySlug/{slug}',[FrontendController::class,'product_by_category']);
+Route::get('getCategoryBySlug/{slug}',[FrontendController::class,'category_by_slug']);
+Route::post('add-to-cart',[CartController::class,'add_to_cart']);
+Route::get('show-cart',[CartController::class,'index']);
+Route::get('delete-cart/{id}',[CartController::class,'destroy']);
+Route::post('add-comment',[CommentController::class,'store']);
+Route::get('show-comment/{id}',[CommentController::class,'show_comment']);
+Route::get('view-comment',[CommentController::class,'index']);
+Route::get('getProductIdBySlug/{slug}',[CommentController::class,'getProductIdBySlug']);
+Route::post('add-favorites',[FavoritesController::class,'store']);
+Route::get('view-favorites',[FavoritesController::class,'index']);
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
