@@ -3,31 +3,28 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Favorites;
-use App\Models\Product;
+use App\Models\Compare;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
-
-class FavoritesController extends Controller
+use App\Models\Product;
+class CompareController extends Controller
 {
     public function index(){
         if(auth('sanctum')->check()){
             $user = auth('sanctum')->user()->id;
-            $favorites = Favorites::where('user_id',$user)->get();
+            $compare = Compare::where('user_id',$user)->get();
             return response()->json([
                 'status' => 200,
-                'favorites' => $favorites
+                'compare' => $compare
             ]);
         }else {
             return response()->json([
                 'status' => 401,
-                'message' => 'Login to view wishlist data'
+                'message' => 'Login to view compare data'
             ]);
         }
     }
     public function store(Request $request){
-
         $validator = Validator::make($request->all(), [
             'product_id' => 'required',
         ]);
@@ -42,19 +39,19 @@ class FavoritesController extends Controller
                 $product_id = $request->input('product_id');
                 $productCheck = Product::find($product_id);
                 if($productCheck){
-                    if(Favorites::where('product_id', $product_id)->where('user_id', $user)->exists()){
+                    if(Compare::where('product_id', $product_id)->where('user_id', $user)->exists()){
                         return response()->json([
                             'status' => 409,
                             'errors' => 'Product already exist'
                         ]);
                     }else{
-                        $favorite = new Favorites();
-                        $favorite->user_id = $user;
-                        $favorite->product_id = $product_id;
-                        $favorite->save();
+                        $compare = new Compare();
+                        $compare->user_id = $user;
+                        $compare->product_id = $product_id;
+                        $compare->save();
                         return response()->json([
                             'status' => 200,
-                            'message' => "Add favorites successfully"
+                            'message' => "Add compare successfully"
                         ]);
                     }
                 }else{
@@ -71,30 +68,4 @@ class FavoritesController extends Controller
             }
         }
     }
-    public function destroy($id)
-    {
-        if(auth('sanctum')->check()){
-            $user = auth('sanctum')->user()->id;
-            $favorite = Favorites::where('id', $id)->where('user_id', $user)->first();
-
-            if($favorite){
-                $favorite->delete();
-                return response()->json([
-                    'status' => 200,
-                    'message' => "Delete favorites successfully"
-                ]);
-            } else {
-                return response()->json([
-                    'status' => 404,
-                    'message' => 'Product not found'
-                ]);
-            }
-        } else {
-            return response()->json([
-                'status' => 401,
-                'message' => 'Unauthorized'
-            ]);
-        }
-    }
-
 }

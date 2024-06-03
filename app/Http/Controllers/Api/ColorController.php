@@ -11,6 +11,7 @@ class ColorController extends Controller
 {
     public function index(){
         $color = Color::all();
+        
         return response()->json([
             'status'=>200,
             'color'=>$color

@@ -22,9 +22,9 @@ class CartController extends Controller
             $productCheck = Product::find($product_id);
 
             if($productCheck){
-                // Kiểm tra nếu số lượng sản phẩm trong kho đủ để thêm vào giỏ hàng
+              
                 if($productCheck->quantity >= $product_qty) {
-                    // Kiểm tra nếu sản phẩm đã tồn tại trong giỏ hàng
+                    
                     if(Cart::where('user_id', $user_id)->where('product_id', $product_id)->exists()){
                         return response()->json([
                             'status' => 409,
@@ -39,7 +39,7 @@ class CartController extends Controller
                         $cartItem->size_id = $size_id;
                         $cartItem->save();
 
-                        // Giảm số lượng sản phẩm trong kho
+                      
                         $productCheck->quantity -= $product_qty;
                         $productCheck->save();
 

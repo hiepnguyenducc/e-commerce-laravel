@@ -7,8 +7,10 @@ use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Collection;
 use App\Models\Color;
+use App\Models\Email;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class FrontendController extends Controller
 {
@@ -167,9 +169,42 @@ class FrontendController extends Controller
         }
 
     }
+    public function search_product_by_name($name)
+{
+    $product = Product::where('name', 'like', '%' . $name . '%')->get();
+    
+    if ($product->isNotEmpty()) {
+        return response()->json([
+            'status' => 200,
+            'product' => $product
+        ]);
+    } else {
+        return response()->json([
+            'status' => 404,
+            'message' => 'Product not found'
+        ], 404);
+    }
+   
+}
 
-
-
-
+public function email(Request $request){
+        $validator = Validator::make($request->all(),[
+            'email'=>'required|email|unique:email,email'
+        ]);
+        if($validator->fails()){
+            return response()->json([
+                'status'=>422,
+                'errors'=>$validator->errors()
+            ]);
+        }else{
+            $email = new Email();
+            $email->email = $request->input('email');
+            $email->save();
+            return response()->json([
+                'status'=>200,
+                'message'=>'Subscribe to newsletter successfully!'
+            ]);
+        }
+}
 
 }
