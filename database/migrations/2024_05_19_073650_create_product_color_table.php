@@ -18,8 +18,8 @@ return new class extends Migration
             $table->bigInteger('quantity')->unsigned();
             $table->timestamps();
 
-            $table->foreign('product_id')->references('id')->on('product')->onDelete('cascade');
-            $table->foreign('color_id')->references('id')->on('color')->onDelete('cascade');
+            // $table->foreign('product_id')->references('id')->on('product');
+            // $table->foreign('color_id')->references('id')->on('color');
         });
     }
 
