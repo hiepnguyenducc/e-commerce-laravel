@@ -22,9 +22,9 @@ class CartController extends Controller
             $productCheck = Product::find($product_id);
 
             if($productCheck){
-              
+
                 if($productCheck->quantity >= $product_qty) {
-                    
+
                     if(Cart::where('user_id', $user_id)->where('product_id', $product_id)->exists()){
                         return response()->json([
                             'status' => 409,
@@ -37,10 +37,8 @@ class CartController extends Controller
                         $cartItem->product_qty = $product_qty;
                         $cartItem->color_id = $color_id;
                         $cartItem->size_id = $size_id;
-                        $productCheck->quantity -= $product_qty;
                         $cartItem->total_price = $productCheck->original_price * $product_qty;
                         $cartItem->save();
-                        $productCheck->save();
 
                         return response()->json([
                             'status' => 201,
@@ -66,6 +64,7 @@ class CartController extends Controller
             ]);
         }
     }
+
     public function index()
     {
         if(auth('sanctum')->check()){

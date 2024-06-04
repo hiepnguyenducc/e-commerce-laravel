@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\BrandController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\CollectionController;
 use App\Http\Controllers\Api\ColorController;
+use App\Http\Controllers\Api\CouponController;
 use App\Http\Controllers\Api\SizeController;
 use App\Http\Controllers\Api\FrontendController;
 use App\Http\Controllers\Api\CartController;
@@ -76,7 +77,12 @@ Route::middleware(['auth:sanctum','isAPIAdmin'])->group(function(){
     Route::get('edit-collection/{id}',[CollectionController::class,'edit']);
     Route::post('update-collection/{id}',[CollectionController::class,'update']);
     Route::get('delete-collection/{id}',[CollectionController::class,'destroy']);
-
+    //Coupon
+    Route::get('view-coupon',[CouponController::class,'index']);
+    Route::post('store-coupon',[CouponController::class,'store']);
+    Route::get('edit-coupon/{id}',[CouponController::class,'edit']);
+    Route::post('update-coupon/{id}',[CouponController::class,'update']);
+    Route::get('delete-coupon/{id}',[CouponController::class,'destroy']);
 
 });
 Route::get('view-product',[ProductController::class,'all_product_new']);

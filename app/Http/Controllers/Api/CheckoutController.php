@@ -38,6 +38,7 @@ class CheckoutController extends Controller
                 $order->full_address = $request->full_address;
                 $order->telephone = $request->telephone;
                 $order->postal_code = $request->postal_code;
+                $order->total_amount = $request->total_amount;
                 $order->payment_method = "COD";
                 $order->tracking_no = "hiepluaga".rand(1111,9999);
                $order->save();
