@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('code')->comment('ma giam gia');
             $table->enum('discount_type',['percentage','fixed'])->comment('Loại giảm giá (phần trăm hoặc số tiền cố định)');
-            $table->decimal('discount_value',['10','2'])->comment('gia tri giam gia');
+            $table->decimal('discount_value',10,2)->comment('gia tri giam gia');
             $table->dateTime('start_date')->comment('ngay bat dau');
             $table->dateTime('end_date')->comment('ngay ket thuc');
             $table->unsignedBigInteger('max_uses')->default(1)->comment('so lan su dung toi da');

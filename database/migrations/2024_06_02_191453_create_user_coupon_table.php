@@ -19,8 +19,8 @@ return new class extends Migration
             $table->timestamps(); 
           
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('coupon_id')->references('id')->on('coupons');
-            $table->foreign('order_id')->references('id')->on('orders');
+            $table->foreign('coupon_id')->references('id')->on('coupon');
+            $table->foreign('order_id')->references('id')->on('cart');
         });
     }
 

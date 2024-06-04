@@ -37,10 +37,9 @@ class CartController extends Controller
                         $cartItem->product_qty = $product_qty;
                         $cartItem->color_id = $color_id;
                         $cartItem->size_id = $size_id;
-                        $cartItem->save();
-
-                      
                         $productCheck->quantity -= $product_qty;
+                        $cartItem->total_price = $productCheck->original_price * $product_qty;
+                        $cartItem->save();
                         $productCheck->save();
 
                         return response()->json([

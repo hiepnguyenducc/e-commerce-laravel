@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\ColorController;
 use App\Http\Controllers\Api\SizeController;
 use App\Http\Controllers\Api\FrontendController;
 use App\Http\Controllers\Api\CartController;
+use App\Http\Controllers\Api\CheckoutController;
 use App\Http\Controllers\Api\CommentController;
 use App\Http\Controllers\Api\CompareController;
 use Illuminate\Http\Request;
@@ -107,6 +108,7 @@ Route::get('delete-favorites/{id}',[FavoritesController::class,'destroy']);
 Route::get('all-size',[SizeController::class,'all_size']);
 Route::post('add-to-compare',[CompareController::class,'store']);
 Route::get('view-compare',[CompareController::class,'index']);
+Route::post('place-order',[CheckoutController::class,'placeorder']);
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
