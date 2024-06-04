@@ -32,12 +32,10 @@ class CollectionController extends Controller
 
         }else{
             $collection = new Collection();
-            $collection->name = $request->input('meta_keyword');
-            $collection->name = $request->input('meta_title');
-            $collection->name = $request->input('meta_description');
-            $collection->name = $request->input('slug');
+
+            $collection->slug = $request->input('slug');
             $collection->name = $request->input('name');
-            $collection->name = $request->input('description');
+
             if($request->hasfile('image')){
                 $file = $request->file('image');
                 $extension = $file->getClientOriginalExtension();
@@ -84,10 +82,7 @@ class CollectionController extends Controller
             if($collection){
                 $collection->name = $request->input('name');
                 $collection->slug = $request->input('slug');
-                $collection->description = $request->input('description');
-                $collection->meta_title = $request->input('meta_title');
-                $collection->meta_description = $request->input('meta_description');
-                $collection->meta_keyword = $request->input('meta_keyword');
+
                 $collection->status = $request->input('status')==true?'1':'0';
                 if($request->hasfile('image')){
                     $path = $collection->name;
