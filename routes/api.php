@@ -6,6 +6,8 @@ use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\CollectionController;
 use App\Http\Controllers\Api\ColorController;
 use App\Http\Controllers\Api\CouponController;
+use App\Http\Controllers\Api\OrderController;
+use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\SizeController;
 use App\Http\Controllers\Api\FrontendController;
 use App\Http\Controllers\Api\CartController;
@@ -83,6 +85,14 @@ Route::middleware(['auth:sanctum','isAPIAdmin'])->group(function(){
     Route::get('edit-coupon/{id}',[CouponController::class,'edit']);
     Route::post('update-coupon/{id}',[CouponController::class,'update']);
     Route::get('delete-coupon/{id}',[CouponController::class,'destroy']);
+    //Post
+    Route::get('view-post',[\App\Http\Controllers\Api\PostController::class,'index']);
+    Route::post('store-post',[\App\Http\Controllers\Api\PostController::class,'store']);
+    Route::get('edit-post/{id}',[\App\Http\Controllers\Api\PostController::class,'edit']);
+    Route::post('update-post/{id}',[\App\Http\Controllers\Api\PostController::class,'update']);
+    Route::get('delete-post/{id}',[\App\Http\Controllers\Api\PostController::class,'destroy']);
+    //Order
+    Route::get('order',[OrderController::class,'index']);
 
 });
 Route::get('view-product',[ProductController::class,'all_product_new']);
@@ -115,6 +125,9 @@ Route::get('all-size',[SizeController::class,'all_size']);
 Route::post('add-to-compare',[CompareController::class,'store']);
 Route::get('view-compare',[CompareController::class,'index']);
 Route::post('place-order',[CheckoutController::class,'placeorder']);
+Route::post('apply-coupon',[CouponController::class,'apply_coupon']);
+Route::get('all-post',[PostController::class,'all_post']);
+Route::get('product-by-slug/{slug}',[PostController::class,'postbyslug']);
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
